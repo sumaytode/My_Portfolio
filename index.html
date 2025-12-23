@@ -1,0 +1,2776 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Sumay Tode | Full Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "hsl(260, 20%, 3%)",
+              foreground: "hsl(260, 10%, 98%)",
+              primary: "hsl(265, 89%, 66%)",
+            },
+            fontFamily: {
+              sans: ["Outfit", "sans-serif"],
+              mono: ["Space Grotesk", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Outfit", sans-serif;
+        background-color: hsl(260, 20%, 3%);
+        color: hsl(260, 10%, 98%);
+        overflow-x: hidden;
+        cursor: none !important;
+      }
+
+      input,
+      textarea,
+      button,
+      a,
+      select {
+        cursor: none !important;
+      }
+
+      /* Animated Background */
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      /* 3D Card Effect */
+      .card-3d {
+        transform-style: preserve-3d;
+        transition: all 0.5s ease;
+      }
+
+      .card-3d:hover {
+        transform: rotateY(5deg) rotateX(5deg);
+      }
+
+      /* Glitch Effect */
+      .glitch {
+        position: relative;
+      }
+
+      .glitch::before,
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.8;
+      }
+
+      .glitch::before {
+        animation: glitch-1 2.5s infinite;
+        color: #00fff9;
+        z-index: -1;
+      }
+
+      .glitch::after {
+        animation: glitch-2 2.5s infinite;
+        color: #ff00ff;
+        z-index: -2;
+      }
+
+      @keyframes glitch-1 {
+        0%,
+        100% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          transform: translate(-2px, -2px);
+        }
+        60% {
+          transform: translate(2px, 2px);
+        }
+        80% {
+          transform: translate(2px, -2px);
+        }
+      }
+
+      @keyframes glitch-2 {
+        0%,
+        100% {
+          transform: translate(0);
+        }
+        20% {
+          transform: translate(2px, -2px);
+        }
+        40% {
+          transform: translate(2px, 2px);
+        }
+        60% {
+          transform: translate(-2px, -2px);
+        }
+        80% {
+          transform: translate(-2px, 2px);
+        }
+      }
+
+      /* Neon Glow */
+      .neon-text {
+        text-shadow: 0 0 10px rgba(168, 85, 247, 0.8),
+          0 0 20px rgba(168, 85, 247, 0.6), 0 0 30px rgba(168, 85, 247, 0.4),
+          0 0 40px rgba(168, 85, 247, 0.2);
+        animation: neon-flicker 3s infinite alternate;
+      }
+
+      @keyframes neon-flicker {
+        0%,
+        19%,
+        21%,
+        23%,
+        25%,
+        54%,
+        56%,
+        100% {
+          text-shadow: 0 0 10px rgba(168, 85, 247, 0.8),
+            0 0 20px rgba(168, 85, 247, 0.6), 0 0 30px rgba(168, 85, 247, 0.4),
+            0 0 40px rgba(168, 85, 247, 0.2);
+        }
+        20%,
+        24%,
+        55% {
+          text-shadow: none;
+        }
+      }
+
+      /* Holographic Effect */
+      .holographic {
+        background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+        background-size: 400% 400%;
+        animation: holographic 3s ease infinite;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      @keyframes holographic {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Glass Morphism */
+      .glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* Liquid Button */
+      .liquid-btn {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .liquid-btn::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .liquid-btn:hover::before {
+        width: 300px;
+        height: 300px;
+      }
+
+      /* Custom Cursor */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        border-radius: 50%;
+        z-index: 100000;
+        pointer-events: none;
+        mix-blend-mode: difference;
+      }
+
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: white;
+      }
+
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 2px solid white;
+      }
+
+      /* Text Reveal */
+      .text-reveal {
+        overflow: hidden;
+      }
+
+      .char {
+        display: inline-block;
+        transform: translateY(100%);
+        opacity: 0;
+      }
+
+      /* Video Container */
+      .video-container {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .video-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(168, 85, 247, 0.3),
+          rgba(59, 130, 246, 0.3)
+        );
+        mix-blend-mode: overlay;
+        pointer-events: none;
+      }
+
+      /* Floating Animation */
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .float-animation {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Code Rain Effect */
+      .code-rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        opacity: 0.1;
+      }
+
+      .code-char {
+        position: absolute;
+        color: #0f0;
+        font-family: monospace;
+        font-size: 14px;
+        animation: fall linear infinite;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+        }
+      }
+
+      /* Timeline */
+      .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          #a855f7,
+          transparent
+        );
+      }
+
+      /* Stats Counter */
+      .stat-number {
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #a855f7, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Mobile Optimization */
+      @media (max-width: 768px) {
+        .cursor-dot,
+        .cursor-outline {
+          display: none !important;
+        }
+        .stat-number {
+          font-size: 2.5rem;
+        }
+      }
+
+      /* Selection */
+      ::selection {
+        background-color: hsla(265, 89%, 66%, 0.3);
+        color: hsl(265, 89%, 66%);
+      }
+
+      /* Scroll Progress Bar */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #a855f7, #3b82f6);
+        z-index: 9999;
+        transform-origin: left;
+      }
+
+      /* Blob Animation */
+      @keyframes blob {
+        0%,
+        100% {
+          border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+        50% {
+          border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+        }
+      }
+
+      .blob {
+        animation: blob 7s ease-in-out infinite;
+      }
+
+      /* Google Cloud Badge - Rectangular */
+      .cloud-badge {
+        position: relative;
+        width: 100px;
+        height: auto;
+      }
+
+      .cloud-badge img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      .cloud-badge-float {
+        z-index: 30;
+        max-width: 130px;
+      }
+
+      .modal-glow {
+        box-shadow:
+          0 0 40px rgba(168, 85, 247, 0.35),
+          0 0 80px rgba(59, 130, 246, 0.25),
+          inset 0 0 30px rgba(255, 255, 255, 0.05);
+      }
+
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+
+      /* ================= FAN STACK (SWAGS) ================= */
+
+      .hand {
+        display: inline-grid;
+        grid-template-columns: repeat(5, 0);
+        gap: 0;
+        transition: 400ms cubic-bezier(.4,0,.2,1);
+      }
+
+      .hand.active,
+      .hand:hover {
+        grid-template-columns: repeat(5, 18vmin);
+        gap: 3vmin;
+      }
+
+
+      .card {
+        position: relative;
+        height: 28vmin;
+        cursor: pointer;
+      }
+
+      .card img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 18vmin;
+        height: 26vmin;
+        object-fit: cover;
+        border-radius: 1.2vmin;
+        transform-origin: 50% 100%;
+        transform: translateX(-50%)
+          rotate(calc((var(--i) * 14deg) - 28deg));
+        transition: 300ms ease;
+        box-shadow: 0 20px 60px rgba(0,0,0,.7);
+      }
+
+      .card:hover img {
+        transform: translateX(-50%) rotate(0deg) translateY(-22%);
+        z-index: 10;
+      }
+
+      /* ================= IMAGE MODAL ================= */
+
+      .image-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.9);
+        backdrop-filter: blur(30px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      }
+
+      .image-modal.hidden {
+        display: none;
+      }
+
+      .image-modal img {
+        max-width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 1.2rem;
+        background: #000;
+      }
+       .image-modal button {
+        position: absolute;
+        z-index: 10001;              /* 🔥 ABOVE IMAGE & BLUR */
+        background: rgba(0, 0, 0, 0.75);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        color: #ffffff;
+        cursor: pointer;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        line-height: 1;
+        opacity: 1;
+        pointer-events: auto;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .image-modal button:hover{
+        background-color: #a855f7;
+      }
+      /* ================= IMAGE MODAL CONTROLS POSITION FIX ================= */
+
+      .image-modal .close {
+        top: 2rem;
+        right: 2rem;
+      }
+
+      .image-modal .prev {
+        top: 50%;
+        left: 2rem;
+        transform: translateY(-50%);
+        font-size: 2rem;
+      }
+
+      .image-modal .next {
+        top: 50%;
+        right: 2rem;
+        transform: translateY(-50%);
+        font-size: 2rem;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Animated Background -->
+    <div class="animated-bg" id="particles-bg"></div>
+
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6"
+    >
+      <div
+        class="container mx-auto px-4 md:px-6 flex items-center justify-between"
+      >
+        <a
+          href="#home"
+          class="text-2xl font-bold font-mono tracking-tighter hover:text-primary transition-colors"
+        >
+          <span class="holographic">ST.</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a
+            href="#home"
+            class="nav-link text-sm font-medium text-white/60 hover:text-primary transition-colors uppercase tracking-widest"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="nav-link text-sm font-medium text-white/60 hover:text-primary transition-colors uppercase tracking-widest"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="nav-link text-sm font-medium text-white/60 hover:text-primary transition-colors uppercase tracking-widest"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="nav-link text-sm font-medium text-white/60 hover:text-primary transition-colors uppercase tracking-widest"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="nav-link text-sm font-medium text-white/60 hover:text-primary transition-colors uppercase tracking-widest"
+            >Contact</a
+          >
+          <a
+            href="#contact"
+            class="liquid-btn bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full transition-colors text-sm font-medium relative z-10"
+          >
+            Let's Talk
+          </a>
+        </div>
+
+        <button id="menu-btn" class="md:hidden text-white z-50">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden glass border-t border-white/10"
+      >
+        <div class="flex flex-col p-4 gap-4">
+          <a
+            href="#home"
+            class="mobile-link text-lg font-medium text-white/80 hover:text-primary p-2 transition-colors"
+            >Home</a
+          >
+          <a
+            href="#about"
+            class="mobile-link text-lg font-medium text-white/80 hover:text-primary p-2 transition-colors"
+            >About</a
+          >
+          <a
+            href="#skills"
+            class="mobile-link text-lg font-medium text-white/80 hover:text-primary p-2 transition-colors"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="mobile-link text-lg font-medium text-white/80 hover:text-primary p-2 transition-colors"
+            >Projects</a
+          >
+          <a
+            href="#contact"
+            class="mobile-link text-lg font-medium text-white/80 hover:text-primary p-2 transition-colors"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="relative z-10">
+      <!-- HERO SECTION -->
+      <section
+        id="home"
+        class="relative min-h-screen flex items-center overflow-hidden pt-20"
+      >
+        <!-- Code Rain Effect -->
+        <div class="code-rain" id="code-rain"></div>
+
+        <!-- Video Background -->
+        <div class="absolute inset-0 z-0 video-container">
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-background/50 via-background/80 to-background z-10"
+          ></div>
+          <div
+            class="w-full h-full bg-gradient-to-br from-purple-900/30 via-blue-900/20 to-background"
+          ></div>
+        </div>
+
+        <!-- Animated Blobs -->
+        <div
+          class="absolute top-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-[100px] blob"
+        ></div>
+        <div
+          class="absolute bottom-20 left-10 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] blob"
+          style="animation-delay: 2s"
+        ></div>
+
+        <div class="container mx-auto px-4 z-20 relative">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+              <div class="hero-badge overflow-hidden">
+                <div
+                  class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono tracking-wider"
+                >
+                  <span class="relative flex h-2 w-2">
+                    <span
+                      class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"
+                    ></span>
+                    <span
+                      class="relative inline-flex rounded-full h-2 w-2 bg-primary"
+                    ></span>
+                  </span>
+                  AVAILABLE FOR WORK
+                </div>
+              </div>
+              <div class="space-y-4">
+                <h1
+                  class="hero-title text-6xl md:text-8xl font-bold tracking-tighter leading-none"
+                >
+                  <span class="block text-white">SUMAY</span>
+                  <span class="block neon-text glitch" data-text="TODE"
+                    >TODE</span
+                  >
+                </h1>
+                <div class="hero-subtitle">
+                  <p
+                    class="text-xl md:text-2xl text-white/60 font-mono pt-4 border-l-2 border-primary/50 pl-6"
+                  >
+                    Full Stack Web Developer &<br />
+                    <span class="holographic">AI Enthusiast</span>
+                  </p>
+                </div>
+              </div>
+
+              <p
+                class="hero-description max-w-lg text-white/70 leading-relaxed text-lg"
+              >
+                I build
+                <span class="text-primary font-semibold">pixel-perfect</span>,
+                accessible, and performant web experiences. Bridging the gap
+                between
+                <span class="text-white font-medium">Creative Design</span> and
+                <span class="text-white font-medium"
+                  >Artificial Intelligence</span
+                >.
+              </p>
+
+              <div class="hero-buttons flex flex-wrap gap-4 pt-4">
+                <a
+                  href="#projects"
+                  class="magnetic-btn liquid-btn group inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white h-14 px-8 text-base rounded-full transition-all duration-300 relative overflow-hidden"
+                >
+                  <span class="relative z-10">View My Work</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </a>
+                <a
+                  href="#contact"
+                  class="magnetic-btn liquid-btn inline-flex items-center justify-center border-2 border-primary/50 hover:bg-primary/10 h-14 px-8 text-base rounded-full backdrop-blur-sm transition-all duration-300 relative overflow-hidden"
+                >
+                  <span class="relative z-10">Get In Touch</span>
+                </a>
+              </div>
+
+              <div class="hero-socials flex gap-6 pt-8 text-white/60">
+                <a
+                  href="https://github.com/sumaytode"
+                  target="_blank"
+                  class="social-icon hover:text-primary transition-colors hover:scale-110 transform duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                    />
+                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                  </svg>
+                </a>
+                <a
+                  href="https://linkedin.com/in/sumaytode"
+                  target="_blank"
+                  class="social-icon hover:text-primary transition-colors hover:scale-110 transform duration-200"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                    />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3D Avatar Card -->
+            <div class="hero-avatar relative hidden lg:block">
+              <div class="relative w-[500px] h-[600px] mx-auto card-3d">
+                <!-- Background Frames -->
+                <div
+                  class="avatar-frame-1 absolute inset-0 rounded-[2rem] border-2 border-primary/20 bg-gradient-to-b from-primary/10 to-transparent backdrop-blur-md rotate-6 scale-95 z-0"
+                ></div>
+
+                <div
+                  class="avatar-frame-2 absolute inset-0 rounded-[2rem] border-2 border-blue-500/20 bg-gradient-to-b from-blue-500/10 to-transparent backdrop-blur-sm -rotate-3 scale-100 z-10"
+                ></div>
+
+                <!-- Avatar Container -->
+                <div
+                  class="avatar-container absolute inset-2 rounded-[1.8rem] overflow-hidden z-20 glass relative"
+                >
+                  <!-- Your Avatar Image -->
+                  <img
+                    src="Avatar.png"
+                    alt="Sumay Avatar"
+                    class="w-full h-full object-cover object-center"
+                  />
+
+                  <!-- Animated Grid Overlay -->
+                  <div class="absolute inset-0 opacity-20 pointer-events-none">
+                    <div
+                      class="grid-animation w-full h-full"
+                      style="
+                        background-image: linear-gradient(
+                            #a855f7 1px,
+                            transparent 1px
+                          ),
+                          linear-gradient(90deg, #a855f7 1px, transparent 1px);
+                        background-size: 50px 50px;
+                      "
+                    ></div>
+                  </div>
+
+                  <!-- Experience Badge -->
+                  <div
+                    class="experience-badge absolute bottom-8 left-8 glass p-4 rounded-xl float-animation"
+                  >
+                    <div
+                      class="text-xs text-white/60 uppercase tracking-wider mb-1"
+                    >
+                      Experience
+                    </div>
+                    <div class="text-2xl font-bold text-white">
+                      3+ <span class="text-primary text-lg">Months</span>
+                    </div>
+                  </div>
+
+                  <!-- Code Symbol -->
+                  <!-- Code Symbol -->
+                  <div
+                    class="absolute top-8 right-8 text-6xl text-primary/20 font-mono float-animation"
+                    style="animation-delay: 1s"
+                  >
+                    &lt;/&gt;
+                  </div>
+
+                  <!-- Google Cloud Badge - ADD THIS -->
+                  <div
+                    class="cloud-badge-float absolute top-8 right-8 glass p-3 rounded-xl float-animation"
+                    style="animation-delay: 0.5s"
+                  >
+                    <div class="cloud-badge align-center">
+                      <img
+                        src="https://logodix.com/logo/432860.png"
+                        alt="Google Cloud Arcade"
+                      />
+                    </div>
+                    <div
+                      class="text-[10px] text-white/60 uppercase tracking-wider text-center mt-2"
+                    >
+                      Google Cloud <br />
+                      Trooper
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div
+          class="scroll-indicator absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span
+            class="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30"
+            >Scroll</span
+          >
+          <div
+            class="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"
+          ></div>
+        </div>
+      </section>
+
+      <!-- STATS SECTION -->
+      <section class="py-20 relative">
+        <div class="container mx-auto px-4">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div class="stat-card text-center glass p-8 rounded-2xl">
+              <div class="stat-number" data-target="3">0</div>
+              <div class="text-white/60 text-sm uppercase tracking-wider mt-2">
+                Months Experience
+              </div>
+            </div>
+            <div class="stat-card text-center glass p-8 rounded-2xl">
+              <div class="stat-number" data-target="6">0</div>
+              <div class="text-white/60 text-sm uppercase tracking-wider mt-2">
+                Projects Completed
+              </div>
+            </div>
+            <div class="stat-card text-center glass p-8 rounded-2xl">
+              <div class="stat-number" data-target="10">0</div>
+              <div class="text-white/60 text-sm uppercase tracking-wider mt-2">
+                Technologies
+              </div>
+            </div>
+            <div class="stat-card text-center glass p-8 rounded-2xl">
+              <div class="stat-number" data-target="100">0</div>
+              <div class="text-white/60 text-sm uppercase tracking-wider mt-2">
+                Commits
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION WITH TIMELINE -->
+      <section id="about" class="py-32 relative">
+        <div class="container mx-auto px-4 relative">
+          <div class="text-center mb-20 about-header">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6">
+              My <span class="holographic">Journey</span>
+            </h2>
+            <p class="text-white/60 text-lg max-w-2xl mx-auto">
+              From AI student to Full-Stack Developer
+            </p>
+          </div>
+
+          <div class="max-w-4xl mx-auto relative">
+            <!-- Timeline Line -->
+            <div class="timeline-line hidden md:block"></div>
+
+            <!-- Timeline Items -->
+            <div class="space-y-16">
+              <!-- Education -->
+              <div
+                class="timeline-item flex flex-col md:flex-row gap-8 items-center"
+              >
+                <div class="md:w-1/2 md:text-right">
+                  <div class="glass p-8 rounded-2xl card-3d">
+                    <div class="flex items-center gap-3 mb-4 md:justify-end">
+                      <div
+                        class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-primary"
+                        >
+                          <path
+                            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+                          />
+                          <path d="M22 10v6" />
+                          <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+                        </svg>
+                      </div>
+                      <span class="text-primary font-mono text-sm"
+                        >2023 - Present</span
+                      >
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">B.Tech in AIDS</h3>
+                    <p class="text-white/60 mb-3">
+                      Savitribai Phule Pune University
+                    </p>
+                    <div class="flex flex-wrap gap-2 md:justify-end">
+                      <span
+                        class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
+                        >CGPA: 7.01</span
+                      >
+                      <span
+                        class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full"
+                        >Artificial Intelligence & Data Science</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="hidden md:block w-6 h-6 rounded-full bg-primary border-4 border-background relative z-10"
+                ></div>
+                <div class="md:w-1/2"></div>
+              </div>
+
+              <!-- Experience -->
+              <div
+                class="timeline-item flex flex-col md:flex-row gap-8 items-center"
+              >
+                <div class="md:w-1/2"></div>
+                <div
+                  class="hidden md:block w-6 h-6 rounded-full bg-blue-500 border-4 border-background relative z-10"
+                ></div>
+                <div class="md:w-1/2">
+                  <div class="glass p-8 rounded-2xl card-3d">
+                    <div class="flex items-center gap-3 mb-4">
+                      <div
+                        class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-blue-500"
+                        >
+                          <rect
+                            width="20"
+                            height="14"
+                            x="2"
+                            y="7"
+                            rx="2"
+                            ry="2"
+                          />
+                          <path
+                            d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                          />
+                        </svg>
+                      </div>
+                      <span class="text-blue-500 font-mono text-sm"
+                        >6 Months</span
+                      >
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">
+                      Google Cloud Arcade Trooper
+                    </h3>
+                    <p class="text-white/60 mb-3">Suvidha Foundation</p>
+                    <ul class="space-y-2 text-white/60 text-sm">
+                      <li class="flex items-start gap-2">
+                        <span class="text-primary mt-1">▹</span>
+                        <span
+                          >I Successfully completed the Google Arcade Program
+                          with a score of 40 points, earning the title of Google
+                          Arcade Trooper
+                        </span>
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <span class="text-primary mt-1">▹</span>
+                        <span
+                          >As a token of achievement, i received amazing Google
+                          Swags including a bag, t-shirt, study lamp, stickers,
+                          and badges
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Experience -->
+              <!-- EXPERIENCE 2 (MOVE TO LEFT + PURPLE THEME LIKE EDUCATION) -->
+              <div class="timeline-item flex flex-col md:flex-row gap-8 items-center">
+                <!-- LEFT SIDE CONTENT -->
+                <div class="md:w-1/2 md:text-right">
+                  <div class="glass p-8 rounded-2xl card-3d">
+                    <div class="flex items-center gap-3 mb-4 md:justify-end">
+                      <div
+                        class="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-primary"
+                        >
+                          <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+                          <path
+                            d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+                          />
+                        </svg>
+                      </div>
+                      <span class="text-primary font-mono text-sm">3 Months</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-2">
+                      Full Stack Developer Intern
+                    </h3>
+                    <p class="text-white/60 mb-3">Suvidha Foundation</p>
+
+                    <ul class="space-y-2 text-white/60 text-sm md:text-right">
+                      <li class="flex items-start gap-2 md:flex-row-reverse">
+                        <span class="text-primary mt-1">▹</span>
+                        <span>
+                          Developed a website for Suvidha Foundation featuring an upcoming
+                          AIDS course
+                        </span>
+                      </li>
+                      <li class="flex items-start gap-2 md:flex-row-reverse">
+                        <span class="text-primary mt-1">▹</span>
+                        <span>
+                          Led a team as part of Megamod's India launch project
+                        </span>
+                      </li>
+                      <li class="flex items-start gap-2 md:flex-row-reverse">
+                        <span class="text-primary mt-1">▹</span>
+                        <span>
+                          Collected and organized information about CS research authors and
+                          publishers
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- CENTER DOT -->
+                <div
+                  class="hidden md:block w-6 h-6 rounded-full bg-primary border-4 border-background relative z-10"
+                ></div>
+
+                <!-- EMPTY RIGHT SIDE -->
+                <div class="md:w-1/2"></div>
+              </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS SECTION WITH INTERACTIVE CARDS -->
+      <section id="skills" class="py-32 relative overflow-hidden bg-black/10">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+          <div
+            class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px]"
+          ></div>
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="text-center mb-20 skills-header">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 text-white">
+              Technical <span class="neon-text">Arsenal</span>
+            </h2>
+            <p class="text-white/70 text-lg max-w-2xl mx-auto">
+              Cutting-edge tools and technologies I master
+            </p>
+          </div>
+
+          <div
+            class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+          >
+            <!-- Frontend -->
+            <div
+              class="skill-card glass p-8 rounded-2xl relative overflow-hidden group cursor-pointer card-3d bg-black/30"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+              <div class="relative z-10">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-blue-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="text-blue-400"
+                  >
+                    <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                    <path d="M3 9h18" />
+                    <path d="M9 21V9" />
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Frontend</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >HTML</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >CSS</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >JavaScript</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >React</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >Tailwind</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-blue-500/50 hover:text-white transition-all"
+                    >GSAP</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Backend -->
+            <div
+              class="skill-card glass p-8 rounded-2xl relative overflow-hidden group cursor-pointer card-3d bg-black/30"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-green-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+              <div class="relative z-10">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-green-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="text-green-400"
+                  >
+                    <polyline points="4 17 10 11 4 5" />
+                    <line x1="12" x2="20" y1="19" y2="19" />
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Backend</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-green-500/50 hover:text-white transition-all"
+                    >Node.js</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-green-500/50 hover:text-white transition-all"
+                    >Express</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-green-500/50 hover:text-white transition-all"
+                    >API</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Database -->
+            <div
+              class="skill-card glass p-8 rounded-2xl relative overflow-hidden group cursor-pointer card-3d bg-black/30"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+              <div class="relative z-10">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-yellow-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="text-yellow-400"
+                  >
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Database</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-yellow-500/50 hover:text-white transition-all"
+                    >MongoDB</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-yellow-500/50 hover:text-white transition-all"
+                    >MySQL</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- AI & Core -->
+            <div
+              class="skill-card glass p-8 rounded-2xl relative overflow-hidden group cursor-pointer card-3d bg-black/30"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              ></div>
+              <div class="relative z-10">
+                <div
+                  class="w-16 h-16 rounded-2xl bg-purple-500/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="text-purple-400"
+                  >
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" />
+                    <path d="M15 2v2" />
+                    <path d="M15 20v2" />
+                    <path d="M2 15h2" />
+                    <path d="M2 9h2" />
+                    <path d="M20 15h2" />
+                    <path d="M20 9h2" />
+                    <path d="M9 2v2" />
+                    <path d="M9 20v2" />
+                  </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-4 text-white">Core & AI</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >Python</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >C++</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >AI/ML</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >OOPs</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >CN</span
+                  >
+                  <span
+                    class="skill-tag px-3 py-1 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 hover:border-purple-500/50 hover:text-white transition-all"
+                    >DBMS</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS SECTION WITH ADVANCED CARDS -->
+      <section id="projects" class="py-32 relative">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-20 projects-header">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6">
+              Featured <span class="holographic">Works</span>
+            </h2>
+            <p class="text-white/60 text-lg max-w-2xl mx-auto">
+              Innovative projects that push boundaries
+            </p>
+          </div>
+
+          <div class="space-y-32">
+            <!-- Project 1 -->
+            <div class="project-item group">
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div
+                  class="project-image relative rounded-2xl overflow-hidden border border-white/10"
+                >
+                  <div
+                    class="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-500/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  ></div>
+                  <img
+                    src="price comparison image.jpeg"
+                    alt="E-Commerce Platform"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  />
+
+                  <!-- Floating Tech Icons -->
+                  <div class="absolute top-4 left-4 flex gap-2 z-20">
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >MySQL</span
+                    >
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >Node.js</span
+                    >
+                  </div>
+                </div>
+
+                <div class="project-content space-y-6">
+                  <div
+                    class="inline-block px-4 py-1 bg-primary/10 text-primary text-sm rounded-full border border-primary/20"
+                  >
+                    Major Project
+                  </div>
+                  <h3
+                    class="text-4xl md:text-5xl font-bold group-hover:text-primary transition-colors"
+                  >
+                    Price Comparison Website
+                  </h3>
+                  <div class="glass p-6 rounded-xl">
+                    <p class="text-white/70 leading-relaxed">
+                      We Developed a price comparison website that somplifies
+                      the process of visitng multiple ecommerce website to
+                      compare price manually <br />
+                      User can enter a product name and it will fetch the prices
+                      from major ecommerce sites highlighting the best and most
+                      efficient deal
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-3">
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >HTML & CSS</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >Node.js</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >SQL DataBase</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >JavaScript</span
+                    >
+                  </div>
+                  <div class="flex gap-4">
+                    <!-- ========= MODIFY PROJECT 1 LIVE DEMO BUTTON ========= -->
+                    <a
+                      href="javascript:void(0)"
+                      id="openVideo"
+                      class="magnetic-btn liquid-btn inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all relative overflow-hidden"
+                    >
+                      <span class="relative z-10">Live Demo</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        class="relative z-10"
+                      >
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" x2="21" y1="14" y2="3" />
+                      </svg>
+                    </a>
+
+                    <a
+                      href="github.com/sumaytode/Price_Comparison"
+                      class="magnetic-btn inline-flex items-center gap-2 border border-white/20 hover:bg-white/5 text-white px-6 py-3 rounded-full transition-all"
+                    >
+                      <span>View Code</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-item group">
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="project-content md:order-1 md:text-right space-y-6">
+                  <div
+                    class="inline-block px-4 py-1 bg-blue-500/10 text-blue-500 text-sm rounded-full border border-blue-500/20"
+                  >
+                    Frontend Project
+                  </div>
+                  <h3
+                    class="text-4xl md:text-5xl font-bold group-hover:text-primary transition-colors"
+                  >
+                    RPJNET booking site
+                  </h3>
+                  <div class="glass p-6 rounded-xl">
+                    <p class="text-white/70 leading-relaxed">
+                      This website promotes physical activity and togetherness
+                      throuugh game like badminton, vollyball and tennis along
+                      with a dedicated food zone to keep the energy high. <br />
+                      Its designed to bring families and friends together for
+                      sports and delicious food
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-3 md:justify-end">
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >HTML</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >CSS</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >JavaScript</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >GSAP</span
+                    >
+                  </div>
+                  <div class="flex gap-4 md:justify-end">
+                    <a
+                      href="www.rpjnet.vercel.app"
+                      class="magnetic-btn liquid-btn inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all relative overflow-hidden"
+                    >
+                      <span class="relative z-10">Live Demo</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        class="relative z-10"
+                      >
+                        <path
+                          d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                        />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" x2="21" y1="14" y2="3" />
+                      </svg>
+                    </a>
+                    <a
+                      href="www.github.com/sumaytode/RPJNET"
+                      class="magnetic-btn inline-flex items-center gap-2 border border-white/20 hover:bg-white/5 text-white px-6 py-3 rounded-full transition-all"
+                    >
+                      <span>View Code</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+
+                <div
+                  class="project-image md:order-2 relative rounded-2xl overflow-hidden border border-white/10"
+                >
+                  <div
+                    class="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  ></div>
+                  <img
+                    src="rpjnet.jpg"
+                    alt="AI Task Manager"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  />
+
+                  <div class="absolute top-4 right-4 flex gap-2 z-20">
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >GSAP Library</span
+                    >
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >Animation</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-item group">
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div
+                  class="project-image relative rounded-2xl overflow-hidden border border-white/10"
+                >
+                  <div
+                    class="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-500/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  ></div>
+                  <img
+                    src="all swags.jpg"
+                    alt="Google Arcade Trooper"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                  />
+
+                  <!-- Floating Tech Icons -->
+                  <div class="absolute top-4 left-4 flex gap-2 z-20">
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >Google Cloud</span
+                    >
+                    <span
+                      class="px-3 py-1 bg-black/60 backdrop-blur-sm text-xs text-white rounded-full border border-white/20"
+                      >Jupitar Notebook</span
+                    >
+                  </div>
+                </div>
+
+                <div class="project-content space-y-6">
+                  <div
+                    class="inline-block px-4 py-1 bg-primary/10 text-primary text-sm rounded-full border border-primary/20"
+                  >
+                    Featured Project
+                  </div>
+                  <h3
+                    class="text-4xl md:text-5xl font-bold group-hover:text-primary transition-colors"
+                  >
+                    Google Cloud Arcade Trooper
+                  </h3>
+                  <div class="glass p-6 rounded-xl">
+                    <p class="text-white/70 leading-relaxed">
+                      I Successfully completed the Google Arcade Program with a
+                      score of 40 points, earning the title of Google Arcade
+                      Trooper <br />
+                      As a token of achievement, i received amazing Google Swags
+                      including a bag, t-shirt, study lamp, stickers, and badges
+                    </p>
+                  </div>
+                  <div class="flex flex-wrap gap-3">
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >Skill Boost</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >Google Cloud</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-white/5 text-white/60 text-sm rounded-lg border border-white/10 font-mono"
+                      >Jupitar Notebook
+                    </span>
+                  </div>
+                  <div class="flex gap-4">
+                    <button
+                      id="openSwags"
+                      class="magnetic-btn liquid-btn inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-all relative overflow-hidden"
+                    >
+                      <span class="relative z-10">Google Swags</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        class="relative z-10"
+                      >
+                        <path
+                          d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                        />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" x2="21" y1="14" y2="3" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS SECTION -->
+      <section class="py-32 relative overflow-hidden bg-black/10">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-20">
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 text-white">
+              Client <span class="neon-text">Reviews</span>
+            </h2>
+            <p class="text-white/70 text-lg">What people say about my work</p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div
+              class="testimonial-card glass p-8 rounded-2xl card-3d bg-black/30"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-blue-500"
+                ></div>
+                <div>
+                  <h4 class="font-bold text-white">Sir Manish</h4>
+                  <p class="text-white/60 text-sm">CEO, Suvidha Foundation</p>
+                </div>
+              </div>
+              <p class="text-white/70 leading-relaxed mb-4">
+                "Outstanding work! Sumay delivered a pixel-perfect website that
+                exceeded our expectations. Professional and creative."
+              </p>
+              <div class="flex gap-1">
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+              </div>
+            </div>
+
+            <div
+              class="testimonial-card glass p-8 rounded-2xl card-3d bg-black/30"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500"
+                ></div>
+                <div>
+                  <h4 class="font-bold text-white">Ram Medhe</h4>
+                  <p class="text-white/60 text-sm">Owner, Dhyeya Institute </p>
+                </div>
+              </div>
+              <p class="text-white/70 leading-relaxed mb-4">
+                "Amazing attention to detail and fantastic communication
+                throughout the project. Highly recommend!"
+              </p>
+              <div class="flex gap-1">
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+              </div>
+            </div>
+
+            <div
+              class="testimonial-card glass p-8 rounded-2xl card-3d bg-black/30"
+            >
+              <div class="flex items-center gap-4 mb-6">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-500"
+                ></div>
+                <div>
+                  <h4 class="font-bold text-white">Priyanka Mam</h4>
+                  <p class="text-white/60 text-sm">HR, Zepcruit</p>
+                </div>
+              </div>
+              <p class="text-white/70 leading-relaxed mb-4">
+                "Incredible technical skills combined with creative vision.
+                Website looks and performs amazingly!"
+              </p>
+              <div class="flex gap-1">
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+                <span class="text-yellow-500">★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="py-32 relative">
+        <div class="container mx-auto px-4">
+          <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-16 contact-header">
+              <h2 class="text-5xl md:text-7xl font-bold mb-6">
+                Let's Create <span class="holographic">Together</span>
+              </h2>
+              <p class="text-white/60 text-lg max-w-2xl mx-auto">
+                Have a project in mind? Let's bring your vision to life
+              </p>
+            </div>
+
+            <div class="glass p-8 md:p-12 rounded-3xl">
+              <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                  <div>
+                    <h3 class="text-2xl font-bold mb-6">Get In Touch</h3>
+                    <p class="text-white/60 leading-relaxed">
+                      I'm currently available for freelance work and exciting
+                      projects. Feel free to reach out!
+                    </p>
+                  </div>
+
+                  <div class="space-y-6">
+                    <a
+                      href="mailto:sumaytode2005@gmail.com"
+                      class="flex items-center gap-4 group p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    >
+                      <div
+                        class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary group-hover:scale-110 transition-all"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-primary group-hover:text-white"
+                        >
+                          <rect width="20" height="16" x="2" y="4" rx="2" />
+                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="text-sm text-white/60">Email</div>
+                        <div class="font-medium">sumaytode2005@gmail.com</div>
+                      </div>
+                    </a>
+
+                    <a
+                      href="linkedin.com/in/sumaytode"
+                      class="flex items-center gap-4 group p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    >
+                      <div
+                        class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-blue-500 group-hover:text-white"
+                        >
+                          <path
+                            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                          />
+                          <rect width="4" height="12" x="2" y="9" />
+                          <circle cx="4" cy="4" r="2" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="text-sm text-white/60">LinkedIn</div>
+                        <div class="font-medium">linkedin.com/in/sumaytode</div>
+                      </div>
+                    </a>
+
+                    <a
+                      href="github.com/sumaytode"
+                      class="flex items-center gap-4 group p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    >
+                      <div
+                        class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          class="text-white group-hover:text-black"
+                        >
+                          <path
+                            d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                          />
+                          <path d="M9 18c-4.51 2-5-2-7-2" />
+                        </svg>
+                      </div>
+                      <div>
+                        <div class="text-sm text-white/60">GitHub</div>
+                        <div class="font-medium">github.com/sumaytode</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact Form -->
+                <form class="contact-form space-y-6">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      class="w-full h-14 bg-white/5 border border-white/10 focus:border-primary/50 rounded-xl px-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      placeholder="Your Email"
+                      class="w-full h-14 bg-white/5 border border-white/10 focus:border-primary/50 rounded-xl px-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Subject"
+                      class="w-full h-14 bg-white/5 border border-white/10 focus:border-primary/50 rounded-xl px-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      placeholder="Your Message"
+                      rows="5"
+                      class="w-full bg-white/5 border border-white/10 focus:border-primary/50 rounded-xl p-6 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none transition-all"
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    class="magnetic-btn liquid-btn w-full h-14 bg-primary hover:bg-primary/90 text-white rounded-xl font-medium transition-all relative overflow-hidden"
+                  >
+                    <span class="relative z-10">Send Message</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-white/5">
+      <div class="container mx-auto px-4">
+        <div
+          class="flex flex-col md:flex-row justify-between items-center gap-6"
+        >
+          <div class="text-center md:text-left">
+            <div class="text-2xl font-bold font-mono mb-2">
+              <span class="holographic">ST.</span>
+            </div>
+            <p class="text-white/60 text-sm">
+              Designed & Built by Sumay Tode © 2025
+            </p>
+          </div>
+          <div class="flex gap-6">
+            <a
+              href="github.com/sumaytode"
+              class="text-white/60 hover:text-primary transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                />
+              </svg>
+            </a>
+            <a
+              href="linkedin.com/in/sumaytode"
+              class="text-white/60 hover:text-primary transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                />
+                <rect width="4" height="12" x="2" y="9" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Register plugins once
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+      // ==================== PARTICLE BACKGROUND ====================
+      function createParticles() {
+        const container = document.getElementById("particles-bg");
+        if (!container) return;
+        container.innerHTML = "";
+        const particleCount = 50;
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+          const size = Math.random() * 4 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+          particle.style.background =
+            Math.random() > 0.5 ? "#a855f7" : "#3b82f6";
+          particle.style.opacity = Math.random() * 0.5 + 0.2;
+          container.appendChild(particle);
+
+          gsap.to(particle, {
+            y: `${Math.random() * 200 - 100}px`,
+            x: `${Math.random() * 200 - 100}px`,
+            duration: Math.random() * 10 + 10,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        }
+      }
+
+      // ==================== CODE RAIN EFFECT ====================
+      function createCodeRain() {
+        const container = document.getElementById("code-rain");
+        if (!container) return;
+        container.innerHTML = "";
+        const chars = "01";
+        const columns = Math.max(20, Math.floor(window.innerWidth / 20));
+        for (let i = 0; i < columns; i++) {
+          const char = document.createElement("div");
+          char.className = "code-char";
+          char.textContent = chars[Math.floor(Math.random() * chars.length)];
+          char.style.left = `${i * 20}px`;
+          char.style.animationDuration = `${Math.random() * 3 + 2}s`;
+          char.style.animationDelay = `${Math.random() * 2}s`;
+          container.appendChild(char);
+        }
+      }
+
+      // ==================== CUSTOM CURSOR ====================
+      (function initCursor() {
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        if (!cursorDot || !cursorOutline) return;
+
+        window.addEventListener("mousemove", (e) => {
+          const x = e.clientX;
+          const y = e.clientY;
+          gsap.to(cursorDot, { x: x - 4, y: y - 4, duration: 0.08 });
+          gsap.to(cursorOutline, { x: x - 20, y: y - 20, duration: 0.25 });
+        });
+
+        document
+          .querySelectorAll("a, button, input, textarea")
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+              gsap.to(cursorOutline, { scale: 1.5, duration: 0.25 });
+              gsap.to(cursorDot, { scale: 1.5, duration: 0.25 });
+            });
+            el.addEventListener("mouseleave", () => {
+              gsap.to(cursorOutline, { scale: 1, duration: 0.25 });
+              gsap.to(cursorDot, { scale: 1, duration: 0.25 });
+            });
+          });
+      })();
+
+      // ==================== SCROLL PROGRESS BAR ====================
+      gsap.to(".scroll-progress", {
+        scaleX: 1,
+        transformOrigin: "left",
+        ease: "none",
+        scrollTrigger: {
+          start: "top top",
+          end: "max",
+          scrub: 0.3,
+        },
+      });
+
+      // ==================== MAGNETIC BUTTONS ====================
+      document.querySelectorAll(".magnetic-btn").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.25 });
+        });
+        btn.addEventListener("mouseleave", () => {
+          gsap.to(btn, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)",
+          });
+        });
+      });
+
+      // ==================== HERO ANIMATIONS (run on load) ====================
+      const heroTL = gsap.timeline();
+      heroTL
+        .from(".hero-badge", { y: 50, opacity: 0, duration: 0.8 })
+        .from(
+          ".hero-title",
+          { y: 100, opacity: 0, duration: 1, ease: "power3.out" },
+          "-=0.4"
+        )
+        .from(".hero-subtitle", { x: -50, opacity: 0, duration: 0.8 }, "-=0.6")
+        .from(
+          ".hero-description",
+          { y: 30, opacity: 0, duration: 0.8 },
+          "-=0.4"
+        )
+        .from(".hero-buttons", { y: 30, opacity: 0, duration: 0.8 }, "-=0.4")
+        .from(
+          ".social-icon",
+          { scale: 0, opacity: 0, stagger: 0.1, ease: "back.out(1.7)" },
+          "-=0.2"
+        );
+
+      gsap.from(".hero-avatar", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.5,
+      });
+      gsap.from(".avatar-frame-1", {
+        rotation: 20,
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        delay: 0.7,
+      });
+      gsap.from(".avatar-frame-2", {
+        rotation: -20,
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        delay: 0.9,
+      });
+
+      gsap.to(".scroll-indicator", {
+        y: 10,
+        opacity: 0.5,
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5,
+      });
+
+      // ==================== STATS COUNTER ====================
+      function animateCounter(element) {
+        const target = parseInt(element.getAttribute("data-target")) || 0;
+        gsap.to(element, {
+          innerHTML: target,
+          duration: 2,
+          snap: { innerHTML: 1 },
+          scrollTrigger: {
+            trigger: element,
+            start: "top 80%",
+            once: true,
+          },
+        });
+      }
+      document.querySelectorAll(".stat-number").forEach(animateCounter);
+
+      // ==================== UTILS: scrollFrom helper with immediateRender:false ====================
+      function scrollFrom(targets, props = {}) {
+        const cfg = Object.assign({ immediateRender: false }, props);
+        return gsap.from(targets, cfg);
+      }
+
+      // ==================== SECTION ANIMATIONS ====================
+      // About
+      scrollFrom(".about-header", {
+        scrollTrigger: { trigger: ".about-header", start: "top 80%" },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+      });
+
+      scrollFrom(".timeline-item", {
+        scrollTrigger: { trigger: ".timeline-item", start: "top 80%" },
+        x: -100,
+        opacity: 0,
+        stagger: 0.3,
+        duration: 1,
+      });
+
+      // Skills header and cards
+      scrollFrom(".skills-header", {
+        scrollTrigger: { trigger: ".skills-header", start: "top 80%" },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+      });
+
+      scrollFrom(".skill-card", {
+        scrollTrigger: { trigger: ".skill-card", start: "top 85%" },
+        y: 100,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      });
+
+      // Hover interactivity for skill cards (always active)
+      document.querySelectorAll(".skill-card").forEach((card) => {
+        card.addEventListener("mouseenter", () => {
+          gsap.to(card, { y: -10, duration: 0.28 });
+          gsap.fromTo(
+            card.querySelectorAll(".skill-tag"),
+            { scale: 0.8, opacity: 0.5 },
+            { scale: 1, opacity: 1, stagger: 0.05, duration: 0.22 }
+          );
+        });
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, { y: 0, duration: 0.3 });
+        });
+      });
+
+      // Projects
+      scrollFrom(".projects-header", {
+        scrollTrigger: { trigger: ".projects-header", start: "top 80%" },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+      });
+
+      document.querySelectorAll(".project-item").forEach((project, index) => {
+        const image = project.querySelector(".project-image");
+        const content = project.querySelector(".project-content");
+
+        if (image) {
+          scrollFrom(image, {
+            scrollTrigger: { trigger: project, start: "top 80%" },
+            scale: 0.8,
+            opacity: 0,
+            duration: 1,
+          });
+          if (window.ScrollTrigger) {
+            gsap.to(image, {
+              scrollTrigger: {
+                trigger: project,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+              y: -50,
+            });
+          } else {
+            gsap.to(image, { y: -8, duration: 1 });
+          }
+        }
+
+        if (content) {
+          scrollFrom(content, {
+            scrollTrigger: { trigger: project, start: "top 80%" },
+            x: index % 2 === 0 ? 100 : -100,
+            opacity: 0,
+            duration: 1,
+            delay: 0.2,
+          });
+        }
+      });
+
+      // Testimonials
+      scrollFrom(".testimonial-card", {
+        scrollTrigger: { trigger: ".testimonial-card", start: "top 85%" },
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+      });
+
+      // Contact
+      scrollFrom(".contact-header", {
+        scrollTrigger: { trigger: ".contact-header", start: "top 80%" },
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+      });
+
+      scrollFrom(
+        ".contact-form input, .contact-form textarea, .contact-form button",
+        {
+          scrollTrigger: { trigger: ".contact-form", start: "top 80%" },
+          x: 50,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.6,
+        }
+      );
+
+      // safety reveal if something doesn't run
+      setTimeout(() => {
+        if (
+          window.ScrollTrigger &&
+          typeof window.ScrollTrigger.refresh === "function"
+        ) {
+          window.ScrollTrigger.refresh();
+        }
+        const safeSelectors = [
+          ".skills-header",
+          ".skill-card",
+          ".testimonial-card",
+          ".contact-header",
+          ".contact-form",
+          ".project-image",
+          ".project-content",
+        ];
+        safeSelectors.forEach((sel) => {
+          document.querySelectorAll(sel).forEach((el) => {
+            const st = window.getComputedStyle(el);
+            if (st.opacity === "0" || st.display === "none") {
+              gsap.set(el, {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                scale: 1,
+                clearProps: "transform",
+              });
+            }
+          });
+        });
+      }, 700);
+
+      // ==================== NAVBAR ====================
+      ScrollTrigger.create({
+        start: "top -50",
+        end: 99999,
+        toggleClass: { className: "glass", targets: "#navbar" },
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: { y: target, offsetY: 80 },
+              ease: "power3.inOut",
+            });
+          }
+        });
+      });
+
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener("click", () => {
+          const isHidden = mobileMenu.classList.contains("hidden");
+          if (isHidden) {
+            mobileMenu.classList.remove("hidden");
+            gsap.from(".mobile-link", {
+              x: -50,
+              opacity: 0,
+              stagger: 0.1,
+              duration: 0.5,
+            });
+          } else {
+            gsap.to(".mobile-link", {
+              x: -50,
+              opacity: 0,
+              stagger: 0.05,
+              duration: 0.3,
+              onComplete: () => mobileMenu.classList.add("hidden"),
+            });
+          }
+        });
+      }
+
+      // ==================== FORM SUBMISSION ====================
+      const contactForm = document.querySelector(".contact-form");
+      if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          gsap.to(".contact-form input, .contact-form textarea", {
+            scale: 0.95,
+            duration: 0.1,
+            yoyo: true,
+            repeat: 1,
+          });
+          setTimeout(() => {
+            alert("Message sent! (Demo - connect to backend)");
+            e.target.reset();
+          }, 200);
+        });
+      }
+
+      // ==================== ACTIVE NAV LINKS ====================
+      const sections = document.querySelectorAll("section[id]");
+      const navLinks = document.querySelectorAll(".nav-link");
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 200) {
+            current = section.getAttribute("id");
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove("text-primary");
+          link.classList.add("text-white/60");
+          if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("text-primary");
+            link.classList.remove("text-white/60");
+          }
+        });
+      });
+
+      // ==================== INITIALIZE ====================
+      createParticles();
+      createCodeRain();
+
+      window.addEventListener("resize", () => {
+        if (
+          window.ScrollTrigger &&
+          typeof window.ScrollTrigger.refresh === "function"
+        )
+          ScrollTrigger.refresh();
+      });
+
+      console.log("🚀 Ultra Creative Portfolio Loaded!");
+    </script>
+    <!-- ========= SCRIPT (ADD INSIDE YOUR <script>) ========= -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const openVideo = document.getElementById("openVideo");
+        const closeVideo = document.getElementById("closeVideo");
+        const videoModal = document.getElementById("videoModal");
+        const modalCard = videoModal.querySelector(".modal-card");
+        const projectVideo = document.getElementById("projectVideo");
+
+        if (!openVideo || !closeVideo || !videoModal || !modalCard) return;
+
+        // ===== INITIAL STATES =====
+        gsap.set(videoModal, { opacity: 0 });
+        gsap.set(modalCard, {
+          scale: 0.6,
+          rotateX: 25,
+          rotateY: -15,
+          z: -300,
+          opacity: 0,
+          filter: "blur(20px)",
+        });
+
+        gsap.set(projectVideo, {
+          opacity: 0,
+          scale: 1.05,
+        });
+
+        // ===== OPEN TIMELINE =====
+        const openTL = gsap.timeline({ paused: true });
+
+        openTL
+          // background fade
+          .to(videoModal, {
+            opacity: 1,
+            duration: 0.35,
+            ease: "power2.out",
+          })
+
+          // portal warp in
+          .to(modalCard, {
+            scale: 1.08,
+            rotateX: -6,
+            rotateY: 4,
+            z: 40,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 0.7,
+            ease: "expo.out",
+          }, "-=0.1")
+
+          // settle with elastic feel
+          .to(modalCard, {
+            scale: 1,
+            rotateX: 0,
+            rotateY: 0,
+            z: 0,
+            duration: 0.6,
+            ease: "elastic.out(1, 0.45)",
+          })
+
+          // glow pulse
+          .fromTo(
+            modalCard,
+            { boxShadow: "0 0 0 rgba(168,85,247,0)" },
+            {
+              boxShadow:
+                "0 0 60px rgba(168,85,247,0.45), 0 0 120px rgba(59,130,246,0.3)",
+              duration: 0.6,
+              ease: "power2.out",
+            },
+            "-=0.4"
+          )
+
+          // video reveal
+          .to(projectVideo, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            ease: "power2.out",
+          }, "-=0.3");
+
+        // ===== CLOSE TIMELINE =====
+        const closeTL = gsap.timeline({
+          paused: true,
+          onComplete: () => {
+            videoModal.classList.add("hidden");
+            videoModal.classList.remove("flex");
+            projectVideo.pause();
+          },
+        });
+
+        closeTL
+          // video fade
+          .to(projectVideo, {
+            opacity: 0,
+            scale: 1.05,
+            duration: 0.25,
+            ease: "power2.in",
+          })
+
+          // collapse into depth
+          .to(modalCard, {
+            scale: 0.7,
+            rotateX: 18,
+            rotateY: -12,
+            z: -250,
+            opacity: 0,
+            filter: "blur(18px)",
+            duration: 0.6,
+            ease: "expo.in",
+          }, "-=0.1")
+
+          // background fade
+          .to(videoModal, {
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.in",
+          }, "-=0.25");
+
+        // ===== EVENTS =====
+        openVideo.addEventListener("click", () => {
+          videoModal.classList.remove("hidden");
+          videoModal.classList.add("flex");
+          projectVideo.currentTime = 0;
+          projectVideo.play();
+          openTL.restart();
+        });
+
+        closeVideo.addEventListener("click", () => {
+          closeTL.restart();
+        });
+
+        videoModal.addEventListener("click", (e) => {
+          if (e.target === videoModal) closeTL.restart();
+        });
+
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && !videoModal.classList.contains("hidden")) {
+            closeTL.restart();
+          }
+        });
+      });
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+          const openBtn = document.getElementById("openSwags");
+          const closeBtn = document.getElementById("closeSwags");
+          const swagsModal = document.getElementById("swagsModal");
+
+          const cards = swagsModal.querySelectorAll(".card img");
+          const modal = swagsModal.querySelector("#imageModal");
+          const modalImg = swagsModal.querySelector("#modalImage");
+          const nextBtn = modal.querySelector(".next");
+          const prevBtn = modal.querySelector(".prev");
+          const closeImgBtn = modal.querySelector(".close");
+
+          let currentIndex = 0;
+          const images = [...cards].map(img => img.src);
+
+          // ===== OPEN FAN MODAL =====
+          openBtn.addEventListener("click", () => {
+            swagsModal.classList.remove("hidden");
+            swagsModal.classList.add("flex");
+
+            const hand = swagsModal.querySelector(".hand");
+            hand.classList.add("active"); // 🔥 THIS IS THE KEY FIX
+
+            gsap.fromTo(
+              hand,
+              { scale: 0.7, rotateX: 25, opacity: 0 },
+              { scale: 1, rotateX: 0, opacity: 1, duration: 0.8, ease: "expo.out" }
+            );
+          });
+
+
+          // ===== CLOSE FAN MODAL =====
+          closeBtn.addEventListener("click", () => {
+            const hand = swagsModal.querySelector(".hand");
+
+            gsap.to(hand, {
+              scale: 0.6,
+              opacity: 0,
+              duration: 0.4,
+              ease: "power2.in",
+              onComplete: () => {
+                hand.classList.remove("active");
+                swagsModal.classList.add("hidden");
+                swagsModal.classList.remove("flex");
+              }
+            });
+          });
+
+
+          // ===== IMAGE OPEN =====
+          function openImage(index, img) {
+            currentIndex = index;
+            modalImg.src = images[index];
+            modal.classList.remove("hidden");
+
+            const rect = img.getBoundingClientRect();
+
+            gsap.set(modalImg, {
+              position: "fixed",
+              top: rect.top,
+              left: rect.left,
+              width: rect.width,
+              height: rect.height,
+              borderRadius: "1vmin"
+            });
+
+            gsap.to(modalImg, {
+              top: "50%",
+              left: "50%",
+              xPercent: -50,
+              yPercent: -50,
+              height: "90vh",
+              width: "auto",
+              borderRadius: "1.2rem",
+              duration: 1,
+              ease: "expo.inOut"
+            });
+          }
+
+          // ===== IMAGE NAV =====
+          function changeImage(dir) {
+            currentIndex = (currentIndex + dir + images.length) % images.length;
+            gsap.to(modalImg, {
+              opacity: 0,
+              x: dir > 0 ? -50 : 50,
+              duration: 0.25,
+              onComplete: () => {
+                modalImg.src = images[currentIndex];
+                gsap.fromTo(
+                  modalImg,
+                  { opacity: 0, x: dir > 0 ? 50 : -50 },
+                  { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }
+                );
+              }
+            });
+          }
+
+          function closeImage() {
+            gsap.to(modalImg, {
+              scale: 0.8,
+              opacity: 0,
+              duration: 0.3,
+              onComplete: () => {
+                modal.classList.add("hidden");
+                gsap.set(modalImg, { clearProps: "all" });
+              }
+            });
+          }
+
+          cards.forEach((img, i) => img.addEventListener("click", () => openImage(i, img)));
+          nextBtn.onclick = () => changeImage(1);
+          prevBtn.onclick = () => changeImage(-1);
+          closeImgBtn.onclick = closeImage;
+
+        });
+        </script>
+
+
+
+    <!-- ========= VIDEO MODAL (ADD BEFORE </body>) ========= -->
+    <div
+      id="videoModal"
+      class="fixed inset-0 bg-black/90 backdrop-blur-xl hidden items-center justify-center z-[9999] perspective-1000"
+    >
+
+    <div
+      class="modal-card relative w-[90%] max-w-4xl aspect-video glass rounded-2xl overflow-hidden modal-glow"
+    >
+
+        <!-- Close Button -->
+        <button
+          id="closeVideo"
+          class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-primary flex items-center justify-center transition"
+        >
+          ✕
+        </button>
+
+        <!-- Video -->
+        <video
+          id="projectVideo"
+          class="w-full h-full object-cover"
+          controls
+          autoplay
+        >
+          <source src="price comparison video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <!-- ================= SWAGS FAN MODAL ================= -->
+    <div
+      id="swagsModal"
+      class="fixed inset-0 bg-black/90 backdrop-blur-2xl hidden items-center justify-center z-[9999]"
+    >
+
+      <!-- Close -->
+      <button
+        id="closeSwags"
+        class="absolute top-6 right-6 w-10 h-10 rounded-full bg-black/60 hover:bg-primary text-white flex items-center justify-center transition"
+      >
+        ✕
+      </button>
+
+      <!-- FAN STACK -->
+      <div class="hand">
+        <div class="card" style="--i:0"><img src="swags bag.jpg"></div>
+        <div class="card" style="--i:1"><img src="swags tshirt.jpg"></div>
+        <div class="card" style="--i:2"><img src="swags lamb.jpg"></div>
+        <div class="card" style="--i:3"><img src="swags stickers.jpg"></div>
+        <div class="card" style="--i:4"><img src="swags badges.jpg"></div>
+      </div>
+
+      <!-- IMAGE VIEWER -->
+      <div id="imageModal" class="image-modal hidden">
+        <button class="close">✕</button>
+        <button class="prev">‹</button>
+        <img id="modalImage">
+        <button class="next">›</button>
+      </div>
+    </div>
+
+  </body>
+</html>
