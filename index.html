@@ -536,6 +536,152 @@
         font-size: 2rem;
       }
 
+      
+      /* ================================================= */
+      /*           STACKING PROJECT SCROLL EFFECT          */
+      /* ================================================= */
+
+      .stack-wrapper {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 12rem;
+        padding-bottom: 30vh;
+      }
+
+      /* Each Project Card */
+      .stack-card {
+        position: sticky;
+        top: 120px;
+
+        transform-origin: top center;
+
+        transition:
+          transform 0.5s ease,
+          filter 0.5s ease,
+          opacity 0.5s ease;
+
+        will-change: transform;
+      }
+
+      /* Smooth Layer Depth */
+      .stack-card:nth-child(1) {
+        z-index: 1;
+      }
+
+      .stack-card:nth-child(2) {
+        z-index: 2;
+        top: 140px;
+      }
+
+      .stack-card:nth-child(3) {
+        z-index: 3;
+        top: 160px;
+      }
+
+      /* Smooth Scale Layer Effect */
+      .stack-card:not(:last-child) {
+        transform: scale(0.96);
+      }
+
+      /* Hover Interaction */
+      .stack-card:hover {
+        transform: scale(1.01);
+        filter: brightness(1.08);
+      }
+
+      /* Better Image Depth */
+      .stack-card .project-image {
+        transition:
+          transform 0.5s ease,
+          box-shadow 0.5s ease;
+      }
+
+      .stack-card:hover .project-image {
+        transform: translateY(-5px);
+        box-shadow:
+          0 20px 50px rgba(168, 85, 247, 0.15),
+          0 10px 30px rgba(59, 130, 246, 0.1);
+      }
+
+      /* Add subtle blur to background cards */
+      .stack-card:not(:hover) {
+        filter: saturate(0.95);
+      }
+
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+      /* ========================================= */
+      /* FIX STACKING CARD TRANSPARENT BACKGROUND  */
+      /* ========================================= */
+
+      .stack-card {
+        position: sticky;
+        top: 120px;
+
+        /* ADD THIS */
+        background: rgba(8, 8, 12, 0.92);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        border-radius: 2rem;
+
+        padding: 2rem;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.45),
+          0 10px 30px rgba(168, 85, 247, 0.08);
+
+        overflow: hidden;
+
+        transition:
+          transform 0.5s ease,
+          filter 0.5s ease,
+          opacity 0.5s ease;
+
+        will-change: transform;
+      }
+
+      .stack-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(168, 85, 247, 0.08),
+            rgba(59, 130, 246, 0.05)
+          );
+
+        pointer-events: none;
+        border-radius: inherit;
+      }
+      /* ================= MOBILE FIX ================= */
+
+      @media (max-width: 768px) {
+        .stack-wrapper {
+          gap: 5rem;
+          padding-bottom: 0;
+        }
+
+        .stack-card {
+          position: relative;
+          top: 0 !important;
+          transform: none !important;
+          margin-bottom: 0;
+        }
+
+        .stack-card:hover {
+          transform: none;
+        }
+      }
+
+
 
     </style>
   </head>
@@ -729,11 +875,14 @@
               </p>
 
               <div class="hero-buttons flex flex-wrap gap-4 pt-4">
+                
+                <!-- VIEW WORK BUTTON -->
                 <a
                   href="#projects"
                   class="magnetic-btn liquid-btn group inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white h-14 px-8 text-base rounded-full transition-all duration-300 relative overflow-hidden"
                 >
                   <span class="relative z-10">View My Work</span>
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -748,13 +897,68 @@
                     <path d="m12 5 7 7-7 7" />
                   </svg>
                 </a>
+
+                <!-- CONTACT BUTTON -->
                 <a
                   href="#contact"
                   class="magnetic-btn liquid-btn inline-flex items-center justify-center border-2 border-primary/50 hover:bg-primary/10 h-14 px-8 text-base rounded-full backdrop-blur-sm transition-all duration-300 relative overflow-hidden"
                 >
                   <span class="relative z-10">Get In Touch</span>
                 </a>
+
+                <!-- RESUME BUTTON -->
+                <button
+                  id="openResume"
+                  class="magnetic-btn liquid-btn inline-flex items-center justify-center border-2 border-primary/50 hover:bg-primary/10 h-14 px-8 text-base rounded-full backdrop-blur-sm transition-all duration-300 relative overflow-hidden"
+                >
+                  <span class="relative z-10 flex items-center gap-2">
+                    Resume
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14 2 14 8 20 8"/>
+                    </svg>
+                  </span>
+                </button>
+
               </div>
+
+              <!-- ================= RESUME MODAL ================= -->
+
+              <div
+                id="resumeModal"
+                class="fixed inset-0 bg-black/80 backdrop-blur-xl z-[99999] hidden items-center justify-center p-4"
+              >
+                
+                <!-- CLOSE BUTTON -->
+                <button
+                  id="closeResume"
+                  class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-primary transition text-white text-2xl z-50"
+                >
+                  ×
+                </button>
+
+                <!-- RESUME CONTAINER -->
+                <div
+                  class="w-full max-w-5xl h-[90vh] bg-[#0b0b12] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+                >
+                  <iframe
+                    src="resume.pdf.pdf"
+                    class="w-full h-full"
+                    frameborder="0"
+                  ></iframe>
+                </div>
+              </div>
+
+
 
               <div class="hero-socials flex gap-6 pt-8 text-white/60">
                 <a
@@ -819,7 +1023,7 @@
                 >
                   <!-- Your Avatar Image -->
                   <img
-                    src="Avatar.png"
+                    src="ai_pfp2 (2).jpeg"
                     alt="Sumay Avatar"
                     class="w-full h-full object-cover object-center"
                   />
@@ -923,7 +1127,7 @@
               </div>
             </div>
             <div class="stat-card text-center glass p-8 rounded-2xl">
-              <div class="stat-number" data-target="100">0</div>
+              <div class="stat-number" data-target="500">0</div>
               <div class="text-white/60 text-sm uppercase tracking-wider mt-2">
                 Commits
               </div>
@@ -1383,9 +1587,9 @@
             </p>
           </div>
 
-          <div class="space-y-32">
+          <div class="stack-wrapper">
             <!-- Project 1 -->
-            <div class="project-item group">
+            <div class="project-item stack-card group">
               <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div
                   class="project-image relative rounded-2xl overflow-hidden border border-white/10"
@@ -1500,7 +1704,7 @@
             </div>
 
             <!-- Project 2 -->
-            <div class="project-item group">
+            <div class="project-item stack-card group">
               <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div class="project-content md:order-1 md:text-right space-y-6">
                   <div
@@ -1612,7 +1816,7 @@
             </div>
 
             <!-- Project 3 -->
-            <div class="project-item group">
+            <div class="project-item stack-card group">
               <div class="grid md:grid-cols-2 gap-8 items-center">
                 <div
                   class="project-image relative rounded-2xl overflow-hidden border border-white/10"
@@ -2008,6 +2212,33 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      const openResume = document.getElementById("openResume");
+      const closeResume = document.getElementById("closeResume");
+      const resumeModal = document.getElementById("resumeModal");
+
+      openResume.addEventListener("click", () => {
+        resumeModal.classList.remove("hidden");
+        resumeModal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      });
+
+      closeResume.addEventListener("click", () => {
+        resumeModal.classList.remove("flex");
+        resumeModal.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      });
+
+      // Close modal when clicking outside
+      resumeModal.addEventListener("click", (e) => {
+        if (e.target === resumeModal) {
+          resumeModal.classList.remove("flex");
+          resumeModal.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }
+      });
+    </script>
 
     <script>
       // Register plugins once
